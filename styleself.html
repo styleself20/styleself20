@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleSelf</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#F5F0E8;--dark:#1A1A18;--accent:#C8A876;--accent2:#8B6F47;--muted:#6B6860;--card:#FDFBF7;--border:rgba(26,26,24,0.12)}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh}
+header{padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--border)}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;letter-spacing:-0.02em}
+.logo span{color:var(--accent);font-style:italic}
+.hright{display:flex;align-items:center;gap:1rem}
+.tagline{font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.chbtn{padding:0.4rem 0.85rem;background:transparent;border:0.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.75rem;color:var(--muted);cursor:pointer;transition:all 0.2s}
+.chbtn:hover{border-color:var(--accent);color:var(--dark)}
+.kstatus{font-size:0.72rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+.kdot{width:7px;height:7px;border-radius:50%;background:#27AE60;flex-shrink:0}
+.kdot.off{background:#E74C3C}
+.main{max-width:800px;margin:0 auto;padding:2rem 1.5rem}
+.screen{display:none}.active{display:block}
+.hero{text-align:center;margin-bottom:2rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;line-height:1.1;margin-bottom:0.75rem;letter-spacing:-0.03em}
+.hero h1 em{font-style:italic;color:var(--accent2)}
+.hero p{color:var(--muted);font-size:0.9rem;font-weight:300;max-width:380px;margin:0 auto;line-height:1.6}
+.api-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+.api-card h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:0.5rem}
+.api-card p{color:var(--muted);font-size:0.82rem;margin-bottom:1rem;line-height:1.5}
+.api-card a{color:var(--accent2)}
+.arow{display:flex;gap:10px}
+.arow input{flex:1;padding:0.65rem 1rem;background:var(--cream);border:0.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--dark)}
+.asave{padding:0.65rem 1.25rem;background:var(--accent2);color:white;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;cursor:pointer}
+.anote{font-size:0.7rem;color:var(--muted);margin-top:0.6rem}
+.upload-zone{background:var(--card);border:1.5px dashed var(--accent);border-radius:16px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:1.5rem}
+.upload-zone:hover{background:#FAF6EE}
+.uicon{width:52px;height:52px;background:linear-gradient(135deg,#C8A876,#8B6F47);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.uicon svg{width:22px;height:22px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.upload-zone h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.35rem}
+.upload-zone p{color:var(--muted);font-size:0.8rem}
+#fi{display:none}
+.previews{display:flex;flex-wrap:wrap;gap:8px;margin-top:1rem;justify-content:center}
+.pimg{width:70px;height:70px;object-fit:cover;border-radius:10px;border:2px solid var(--accent)}
+.scard{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+.scard h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:1.25rem}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.si label{display:block;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;font-weight:500}
+.si select{width:100%;padding:0.6rem 0.85rem;background:var(--cream);border:0.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--dark);appearance:none;cursor:pointer}
+.abtn{width:100%;padding:1rem;background:var(--dark);color:var(--cream);border:none;border-radius:12px;font-family:'Playfair Display',serif;font-size:1rem;cursor:pointer;transition:all 0.2s}
+.abtn:hover{background:#2D2D2A;transform:translateY(-1px)}
+.abtn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.lcenter{text-align:center;padding:4rem 2rem}
+.lring{width:50px;height:50px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1.5rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ltxt{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:0.5rem}
+.lsub{color:var(--muted);font-size:0.85rem}
+.rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem}
+.rh h2{font-family:'Playfair Display',serif;font-size:1.8rem}
+.nbtn{padding:0.5rem 1rem;background:transparent;border:0.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.8rem;cursor:pointer;color:var(--muted)}
+.nbtn:hover{border-color:var(--accent);color:var(--dark)}
+.pstrip{background:var(--dark);color:var(--cream);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem}
+.pst{text-align:center}
+.psl{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:0.35rem}
+.psv{font-family:'Playfair Display',serif;font-size:0.9rem;color:var(--accent)}
+.pcrd{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem}
+.slbl{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.85rem;font-weight:500}
+.swts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:0.75rem}
+.swt{display:flex;flex-direction:column;align-items:center;gap:5px}
+.sc{width:48px;height:48px;border-radius:10px;border:0.5px solid var(--border)}
+.sn{font-size:0.6rem;color:var(--muted);text-align:center;max-width:54px;line-height:1.3}
+.avlbl{font-size:0.65rem;color:#C0392B;letter-spacing:0.08em;text-transform:uppercase;margin:0.75rem 0 0.6rem}
+.ogrid{display:grid;gap:1rem}
+.ocrd{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;transition:all 0.2s}
+.ocrd:hover{border-color:var(--accent)}
+.oh{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.on{width:28px;height:28px;background:var(--accent);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:0.85rem;flex-shrink:0}
+.ov{font-family:'Playfair Display',serif;font-size:1rem;flex:1;margin-left:0.85rem}
+.oo{font-size:0.7rem;color:var(--muted);background:var(--cream);padding:0.25rem 0.65rem;border-radius:20px;border:0.5px solid var(--border);white-space:nowrap}
+.oi{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem}
+.oi li{display:flex;align-items:flex-start;gap:0.65rem;font-size:0.85rem;line-height:1.5}
+.dot{width:5px;height:5px;background:var(--accent);border-radius:50%;margin-top:6px;flex-shrink:0}
+.ow{font-size:0.78rem;color:var(--muted);font-style:italic;line-height:1.6;border-top:0.5px solid var(--border);padding-top:0.85rem}
+.bcrd{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-top:1.25rem}
+.bgrid{display:flex;flex-wrap:wrap;gap:8px;margin-top:0.85rem}
+.bp{padding:0.4rem 0.9rem;background:var(--cream);border:0.5px solid var(--border);border-radius:20px;font-size:0.8rem;color:var(--dark)}
+.err{background:#FEF0F0;border:0.5px solid #F5C1C1;border-radius:10px;padding:0.85rem;color:#A32D2D;font-size:0.82rem;margin-top:0.85rem;display:none}
+@media(max-width:600px){.hero h1{font-size:1.8rem}.sgrid{grid-template-columns:1fr}.pstrip{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Style<span>Self</span></div>
+  <div class="hright">
+    <div class="kstatus"><div class="kdot off" id="kdot"></div><span id="ktxt">No API key</span></div>
+    <button class="chbtn" onclick="showKey()">Change API Key</button>
+  </div>
+</header>
+<div class="main">
+  <div id="upload-screen" class="screen active">
+    <div class="hero">
+      <h1>Find your <em>signature</em> style</h1>
+      <p>Upload photos of yourself. AI analyzes your features and builds a style profile made only for you.</p>
+    </div>
+    <div class="api-card" id="api-card">
+      <h3>Add your Claude API key</h3>
+      <p>Get your key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → API Keys → Create Key. Starts with sk-ant-</p>
+      <div class="arow">
+        <input type="password" id="akey" placeholder="sk-ant-..."/>
+        <button class="asave" onclick="saveKey()">Save</button>
+      </div>
+      <p class="anote">Stored only in your browser. Never shared.</p>
+    </div>
+    <div class="upload-zone" onclick="document.getElementById('fi').click()">
+      <div class="uicon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></div>
+      <h3>Drop your photos here</h3>
+      <p>Click to browse — upload up to 3 photos</p>
+      <div class="previews" id="prev"></div>
+    </div>
+    <input type="file" id="fi" multiple accept="image/*" onchange="handleFiles(this.files)">
+    <div class="scard">
+      <h3>Your preferences</h3>
+      <div class="sgrid">
+        <div class="si"><label>Budget</label><select id="budget"><option value="budget">Budget (under $50)</option><option value="mid">Mid-range ($50–$150)</option><option value="high">High-end ($150–$400)</option><option value="luxury">Luxury ($400+)</option></select></div>
+        <div class="si"><label>Style</label><select id="style"><option value="streetwear">Streetwear</option><option value="casual">Casual</option><option value="smart casual">Smart Casual</option><option value="formal">Formal</option><option value="minimalist">Minimalist</option><option value="bohemian">Bohemian</option><option value="athletic">Athletic</option><option value="vintage">Vintage</option></select></div>
+        <div class="si"><label>Gender expression</label><select id="gender"><option value="menswear">Menswear</option><option value="womenswear">Womenswear</option><option value="unisex">Unisex</option></select></div>
+        <div class="si"><label>Climate</label><select id="climate"><option value="all seasons">All seasons</option><option value="warm">Warm / Summer</option><option value="cold">Cold / Winter</option><option value="layering">Layering / Fall</option></select></div>
+      </div>
+    </div>
+    <div id="err" class="err"></div>
+    <button class="abtn" id="abtn" onclick="analyze()" disabled>Analyze My Style →</button>
+  </div>
+
+  <div id="loading-screen" class="screen">
+    <div class="lcenter">
+      <div class="lring"></div>
+      <div class="ltxt">Reading your features...</div>
+      <div class="lsub" id="lsub">Analyzing skin tone & color season</div>
+    </div>
+  </div>
+
+  <div id="result-screen" class="screen">
+    <div class="rh"><h2>Your style profile</h2><button class="nbtn" onclick="reset()">New analysis</button></div>
+    <div class="pstrip" id="pstrip"></div>
+    <div class="pcrd" id="palette"></div>
+    <div style="margin:1.25rem 0 0.75rem"><div class="slbl">Your 5 outfits</div></div>
+    <div class="ogrid" id="outfits"></div>
+    <div class="bcrd" id="brands"></div>
+  </div>
+</div>
+
+<script>
+let files=[];
+let apiKey=localStorage.getItem('ss_key')||'';
+
+function updateStatus(){
+  const dot=document.getElementById('kdot');
+  const txt=document.getElementById('ktxt');
+  const card=document.getElementById('api-card');
+  if(apiKey){dot.classList.remove('off');txt.textContent='API key saved';card.style.display='none';}
+  else{dot.classList.add('off');txt.textContent='No API key';card.style.display='block';}
+  document.getElementById('abtn').disabled=!(files.length>0&&apiKey);
+}
+
+function showKey(){
+  document.getElementById('api-card').style.display='block';
+  document.getElementById('akey').value=apiKey;
+  document.getElementById('akey').focus();
+}
+
+function saveKey(){
+  const k=document.getElementById('akey').value.trim();
+  if(!k.startsWith('sk-ant-')){showErr('Key must start with sk-ant-');return;}
+  apiKey=k;localStorage.setItem('ss_key',k);
+  updateStatus();hideErr();
+}
+
+function handleFiles(f){
+  files=files.concat(Array.from(f)).slice(0,3);
+  const c=document.getElementById('prev');c.innerHTML='';
+  files.forEach(fl=>{const img=document.createElement('img');img.className='pimg';img.src=URL.createObjectURL(fl);c.appendChild(img);});
+  updateStatus();
+}
+
+function show(id){['upload-screen','loading-screen','result-screen'].forEach(s=>document.getElementById(s).classList.remove('active'));document.getElementById(id).classList.add('active');}
+async function toB64(f){return new Promise((r,j)=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.onerror=j;fr.readAsDataURL(f);});}
+function showErr(m){const e=document.getElementById('err');e.textContent=m;e.style.display='block';}
+function hideErr(){document.getElementById('err').style.display='none';}
+
+async function analyze(){
+  if(!files.length||!apiKey)return;
+  hideErr();show('loading-screen');
+  const msgs=['Analyzing skin tone & color season...','Mapping your color palette...','Building outfits for your features...','Finding your perfect brands...'];
+  let mi=0;const ls=document.getElementById('lsub');
+  const iv=setInterval(()=>{mi=(mi+1)%msgs.length;ls.textContent=msgs[mi];},2200);
+  try{
+    const content=[];
+    for(const f of files){const b64=await toB64(f);content.push({type:'image',source:{type:'base64',media_type:f.type||'image/jpeg',data:b64}});}
+    content.push({type:'text',text:`You are an elite personal stylist. Analyze the person in these photos with extreme specificity. Reference what you actually see. Never be generic.
+
+Preferences: Budget=${document.getElementById('budget').value} | Style=${document.getElementById('style').value} | Gender=${document.getElementById('gender').value} | Climate=${document.getElementById('climate').value}
+
+Return ONLY valid JSON no markdown:
+{"profile":{"undertone":"specific","season":"Warm Spring or Light Spring or True Spring or Light Summer or True Summer or Soft Summer or Warm Autumn or Deep Autumn or Soft Autumn or Deep Winter or True Winter or Cool Winter","contrast":"Low or Medium or High plus reason","hairColor":"specific","eyeColor":"specific","skinTone":"specific"},"palette":{"bestColors":[{"name":"Name","hex":"#HEX","why":"specific"},{"name":"Name","hex":"#HEX","why":"reason"},{"name":"Name","hex":"#HEX","why":"reason"},{"name":"Name","hex":"#HEX","why":"reason"},{"name":"Name","hex":"#HEX","why":"reason"}],"avoidColors":[{"name":"Name","hex":"#HEX"},{"name":"Name","hex":"#HEX"},{"name":"Name","hex":"#HEX"}]},"outfits":[{"vibe":"name","occasion":"type","items":["item with color+fit","item","item","item","item"],"why":"one sentence specific to this person"}],"brands":{"perfect":["B1","B2","B3","B4","B5"],"avoid":["B1"]}}
+Exactly 5 outfits.`});
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:[{role:'user',content}]})});
+    clearInterval(iv);
+    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API error');}
+    const d=await res.json();
+    const raw=d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
+    renderResults(JSON.parse(raw));
+  }catch(err){clearInterval(iv);show('upload-screen');showErr('Error: '+err.message);}
+}
+
+function renderResults(data){
+  show('result-screen');
+  const p=data.profile;
+  document.getElementById('pstrip').innerHTML=`
+    <div class="pst"><div class="psl">Undertone</div><div class="psv">${p.undertone.split(' ').slice(0,2).join(' ')}</div></div>
+    <div class="pst"><div class="psl">Season</div><div class="psv">${p.season}</div></div>
+    <div class="pst"><div class="psl">Contrast</div><div class="psv">${p.contrast.split(' ')[0]}</div></div>
+    <div class="pst"><div class="psl">Skin Tone</div><div class="psv">${p.skinTone.split(' ').slice(0,3).join(' ')}</div></div>`;
+  document.getElementById('palette').innerHTML=`
+    <div class="slbl">Your best colors</div>
+    <div class="swts">${data.palette.bestColors.map(c=>`<div class="swt"><div class="sc" style="background:${c.hex}" title="${c.why}"></div><div class="sn">${c.name}</div></div>`).join('')}</div>
+    <div class="avlbl">Colors to avoid</div>
+    <div class="swts">${data.palette.avoidColors.map(c=>`<div class="swt"><div class="sc" style="background:${c.hex};opacity:0.45"></div><div class="sn">${c.name}</div></div>`).join('')}</div>`;
+  document.getElementById('outfits').innerHTML=data.outfits.map((o,i)=>`
+    <div class="ocrd">
+      <div class="oh"><div class="on">${i+1}</div><div class="ov">${o.vibe}</div><div class="oo">${o.occasion}</div></div>
+      <ul class="oi">${o.items.map(it=>`<li><div class="dot"></div>${it}</li>`).join('')}</ul>
+      <div class="ow">${o.why}</div>
+    </div>`).join('');
+  document.getElementById('brands').innerHTML=`
+    <div class="slbl">Brands made for your aesthetic</div>
+    <div class="bgrid">${data.brands.perfect.map(b=>`<div class="bp">${b}</div>`).join('')}</div>`;
+}
+
+function reset(){files=[];document.getElementById('prev').innerHTML='';show('upload-screen');updateStatus();}
+updateStatus();
+</script>
+</body>
+</html>
